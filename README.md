@@ -19,7 +19,14 @@ To disable/enable CPM checkboxes on allocs webmap (comment or uncomment) look fo
 
 The actual layer code for CPM layers can be found between:
 ```
-/CPM Layers -->
+//CPM Layers -->
 .......
 // <-- CPM Layers
 ```
+
+This version contains checkboxes and layers for:
+* Reset Regions
+* Traders
+* All POI's
+* Quest POI's
+* Quest POI's with bed/lcb (disabled (commented) by default)
