@@ -174,11 +174,11 @@ function InitMap() {
 	layerControl.addOverlay (GetQuestPOILayer (map, mapinfo), "Quest POIs");
 	layerCount++;
 
-	/*
-	layerControl.addOverlay (GetQuestPOIBedLcbLayer (map, mapinfo), "Quest POIs with bed/lcb");
-	layerCount++;
-	*/
-
+	if (HasPermission ("webapi.getlandclaims")) {
+		layerControl.addOverlay (GetQuestPOIBedLcbLayer (map, mapinfo), "Quest POIs with bed/lcb");
+		layerCount++;
+	}
+	
 	// <-- CPM Checkboxes
 
 	if (HasPermission ("webapi.gethostilelocation")) {
@@ -667,6 +667,7 @@ function GetTraderMarkerLayer (map, mapinfo) {
 		traderMarkerGroup.clearLayers();
 		
 		$.each( data.Traders, function( key, val ) {
+			var marker;
 			var traderTooltip = "Trader: " + val.name;
 			marker = L.marker([val.x, val.z], {icon: traderIcon});
 			marker.bindPopup(traderTooltip);
@@ -780,10 +781,20 @@ function GetQuestPOIBedLcbLayer (map, mapinfo) {
 	
 	var questPoiGroup = L.layerGroup();
 	
+	var questPoiIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10],
+		correction: [20, 18]
+	});
+
 	var setquestpois = function(data) {
 		questPoiGroup.clearLayers();
 		
 		$.each( data.QuestPOIs, function( key, val ) {
+			var marker;
 			var sizex = Math.abs(val.minx - val.maxx);
 			var sizez = Math.abs(val.minz - val.maxz);
 			var sizeHalfx = Math.floor(sizex / 2);
@@ -791,6 +802,9 @@ function GetQuestPOIBedLcbLayer (map, mapinfo) {
 			var bounds = L.latLngBounds(L.latLng(val.x - sizeHalfx, val.z - sizeHalfz), L.latLng(val.x + sizeHalfx, val.z + sizeHalfz));
 			var r = L.rectangle(bounds, {color: questPOIBedLcbColor, weight: 1, opacity: 0.8, fillOpacity: 0.15});
 			r.bindPopup("Name: " + val.name + " <br/>Position: " + val.x + " " + val.z + " <br/>Conttains bed/lcb: " + val.containsbed);
+			marker = L.marker([val.x, val.z], {icon: questPoiIcon});
+			marker.bindPopup("Name: " + val.name + " <br/>Position: " + val.x + " " + val.z + " <br/>Conttains bed/lcb: " + val.containsbed);
+			questPoiGroup.addLayer(marker);
 			questPoiGroup.addLayer(r);
 		});
 	}
