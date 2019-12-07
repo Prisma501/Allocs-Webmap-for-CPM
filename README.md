@@ -29,4 +29,4 @@ This version contains checkboxes and layers for:
 * Traders
 * All POI's
 * Quest POI's
-* Quest POI's with bed/lcb (disabled (commented) by default)
+* Quest POI's with bed/lcb (shielded behind viewlandclaims permission(allocs))
