@@ -162,6 +162,7 @@ function InitMap() {
 	}
 	
 	// CPM Checkboxes -->
+	
 	layerControl.addOverlay (GetResetRegionsLayer (map, mapinfo), "Reset Regions");
 	layerCount++;
 
@@ -176,6 +177,44 @@ function InitMap() {
 
 	if (HasPermission ("webapi.getlandclaims")) {
 		layerControl.addOverlay (GetQuestPOIBedLcbLayer (map, mapinfo), "Quest POIs with bed/lcb");
+		layerCount++;
+	}
+
+	if (HasPermission ("webapi.viewallclaims")) {
+		layerControl.addOverlay (GetHomesLayer (map, mapinfo), "Player beds");
+		layerCount++;
+			
+		layerControl.addOverlay (GetNormalClaimsLayer (map, mapinfo), "Adv. Claims Normal");
+		layerCount++;
+	
+		layerControl.addOverlay (GetReversedClaimsLayer (map, mapinfo), "Adv. Claims Reversed");
+		layerCount++;
+	
+		layerControl.addOverlay (GetTimedClaimsLayer (map, mapinfo), "Adv. Claims Timed");
+		layerCount++;
+	
+		layerControl.addOverlay (GetLeveledClaimsLayer (map, mapinfo), "Adv. Claims Leveled");
+		layerCount++;
+	
+		layerControl.addOverlay (GetPortalClaimsLayer (map, mapinfo), "Adv. Claims Portal");
+		layerCount++;
+	
+		layerControl.addOverlay (GetHostilefreeClaimsLayer (map, mapinfo), "Adv. Claims Hostilefree");
+		layerCount++;
+	
+		layerControl.addOverlay (GetOpenhoursClaimsLayer (map, mapinfo), "Adv. Claims Openhours");
+		layerCount++;
+	
+		layerControl.addOverlay (GetNotifyClaimsLayer (map, mapinfo), "Adv. Claims Notify");
+		layerCount++;
+	
+		layerControl.addOverlay (GetCommandClaimsLayer (map, mapinfo), "Adv. Claims Command");
+		layerCount++;
+			
+		layerControl.addOverlay (GetPlayerlevelClaimsLayer (map, mapinfo), "Adv. Claims Playerlevel");
+		layerCount++;
+		
+		layerControl.addOverlay (GetLcbFreeClaimsLayer (map, mapinfo), "Adv. Claims LcbFree");
 		layerCount++;
 	}
 	
@@ -827,6 +866,748 @@ function GetQuestPOIBedLcbLayer (map, mapinfo) {
 	});
 
 	return questPoiGroup;
+}
+
+function GetNormalClaimsLayer (map, mapinfo) {
+	var normalColor = "#00FF00"; 
+	var normalClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setNormal = function(data) {
+		normalClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: normalColor,color: normalColor,fillOpacity:0.15});
+			
+			var normalTooltip = "Name: " + value.Name + " Type: Normal";
+			//polygon.bindPopup(normalTooltip);
+			
+			normalClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(normalTooltip);
+			normalClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateNormalEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=normal")
+		.done(setNormal)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching normal claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == normalClaimsGroup) {
+			updateNormalEvent();
+		}
+	});
+
+	return normalClaimsGroup;
+}
+
+function GetReversedClaimsLayer (map, mapinfo) {
+	var reversedColor = "#FF4000";
+	var reversedClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setReversed = function(data) {
+		reversedClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: reversedColor,color: reversedColor,fillOpacity:0.15});
+			
+			var reversedTooltip = "Name: " + value.Name + " Type: Reversed";
+			//polygon.bindPopup(reversedTooltip);
+			
+			reversedClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(reversedTooltip);
+			reversedClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateReversedEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=reversed")
+		.done(setReversed)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching reversed claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == reversedClaimsGroup) {
+			updateReversedEvent();
+		}
+	});
+
+	return reversedClaimsGroup;
+}
+
+function GetHostilefreeClaimsLayer (map, mapinfo) {
+	var hostilefreeColor = "#00FFFF";
+	var hostilefreeClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setHostilefree = function(data) {
+		hostilefreeClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: hostilefreeColor,color: hostilefreeColor,fillOpacity:0.15});
+			
+			var hostilefreeTooltip = "Name: " + value.Name + " Type: Hostilefree";
+			//polygon.bindPopup(hostilefreeTooltip);
+			
+			hostilefreeClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(hostilefreeTooltip);
+			hostilefreeClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateHostilefreeEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=hostilefree")
+		.done(setHostilefree)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching hostilefree claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == hostilefreeClaimsGroup) {
+			updateHostilefreeEvent();
+		}
+	});
+
+	return hostilefreeClaimsGroup;
+}
+
+function GetTimedClaimsLayer (map, mapinfo) {
+	var timedColor = "#00FF00";
+	var timedClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setTimed = function(data) {
+		timedClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: timedColor,color: timedColor,fillOpacity:0.15});
+			
+			var timedTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(timedTooltip);
+			
+			timedClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(timedTooltip);
+			timedClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateTimedEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=timed")
+		.done(setTimed)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching timed claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == timedClaimsGroup) {
+			updateTimedEvent();
+		}
+	});
+
+	return timedClaimsGroup;
+}
+
+function GetLeveledClaimsLayer (map, mapinfo) {
+	var leveledColor = "#00FF00";
+	var leveledClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setLeveled = function(data) {
+		leveledClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: leveledColor,color: leveledColor,fillOpacity:0.15});
+			
+			var leveledTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(leveledTooltip);
+			
+			leveledClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(leveledTooltip);
+			leveledClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateLeveledEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=leveled")
+		.done(setLeveled)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching leveled claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == leveledClaimsGroup) {
+			updateLeveledEvent();
+		}
+	});
+
+	return leveledClaimsGroup;
+}
+
+function GetPortalClaimsLayer (map, mapinfo) {
+	var portalColor = "#A901DB";
+	var portalClaimsGroup = L.layerGroup();
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setPortal = function(data) {
+		portalClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: portalColor,color: portalColor,fillOpacity:0.15});
+			
+			var portalTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(portalTooltip);
+			
+			portalClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(portalTooltip);
+			portalClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updatePortalEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=portal")
+		.done(setPortal)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching portal claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == portalClaimsGroup) {
+			updatePortalEvent();
+		}
+	});
+
+	return portalClaimsGroup;
+}
+
+function GetOpenhoursClaimsLayer (map, mapinfo) {
+	var openhoursColor = "#00FF00";
+	var openhoursClaimsGroup = L.layerGroup();
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setOpenhours = function(data) {
+		openhoursClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: openhoursColor,color: openhoursColor,fillOpacity:0.15});
+			
+			var openhoursTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(openhoursTooltip);
+			
+			openhoursClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(openhoursTooltip);
+			openhoursClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateOpenhoursEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=openhours")
+		.done(setOpenhours)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching openhours claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == openhoursClaimsGroup) {
+			updateOpenhoursEvent();
+		}
+	});
+
+	return openhoursClaimsGroup;
+}
+
+function GetNotifyClaimsLayer (map, mapinfo) {
+	var notifyColor = "#FF0000";
+	var notifyClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setNotify = function(data) {
+		notifyClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: notifyColor,color: notifyColor,fillOpacity:0.15});
+			
+			var notifyTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(notifyTooltip);
+			
+			notifyClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(notifyTooltip);
+			notifyClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateNotifyEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=notify")
+		.done(setNotify)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching notify claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == notifyClaimsGroup) {
+			updateNotifyEvent();
+		}
+	});
+
+	return notifyClaimsGroup;
+}
+
+function GetCommandClaimsLayer (map, mapinfo) {
+	var commandColor = "#0000FF";
+	var commandClaimsGroup = L.layerGroup();
+		
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setCommand = function(data) {
+		commandClaimsGroup.clearLayers();
+							
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: commandColor,color: commandColor,fillOpacity:0.15});
+			
+			var commandTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(commandTooltip);
+			
+			commandClaimsGroup.addLayer(polygon);
+						
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(commandTooltip);
+			commandClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateCommandEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=command")
+		.done(setCommand)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching command claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == commandClaimsGroup) {
+			updateCommandEvent();
+		}
+	});
+
+	return commandClaimsGroup;
+}
+
+function GetPlayerlevelClaimsLayer (map, mapinfo) {
+	var playerlevelColor = "#BF00FF";
+	var playerlevelClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setPlayerlevel = function(data) {
+		playerlevelClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: playerlevelColor,color: playerlevelColor,fillOpacity:0.15});
+			
+			var playerlevelTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(playerlevelTooltip);
+			
+			playerlevelClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(playerlevelTooltip);
+			playerlevelClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updatePlayerlevelEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=playerlevel")
+		.done(setPlayerlevel)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching playerlevel claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == playerlevelClaimsGroup) {
+			updatePlayerlevelEvent();
+		}
+	});
+
+	return playerlevelClaimsGroup;
+}
+
+function GetLcbFreeClaimsLayer (map, mapinfo) {
+	var lcbfreeColor = "#00FF00";
+	var lcbfreeClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setLcbFree = function(data) {
+		lcbfreeClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: lcbfreeColor,color: lcbfreeColor,fillOpacity:0.15});
+			
+			var lcbFreeTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(playerlevelTooltip);
+			
+			lcbfreeClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(lcbFreeTooltip);
+			lcbfreeClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateLcbFreeEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=lcbfree")
+		.done(setLcbFree)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching lcbfree claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == lcbfreeClaimsGroup) {
+			updateLcbFreeEvent();
+		}
+	});
+
+	return lcbfreeClaimsGroup;
+}
+
+function GetHomesLayer (map, mapinfo) {
+	var homesGroup = L.layerGroup();
+	var homesClusterGroup = L.markerClusterGroup({
+		disableClusteringAtZoom: mapinfo.maxzoom,
+		singleMarkerMode: true,
+		maxClusterRadius: 50
+	});
+	var homesRectGroup = L.layerGroup();
+	homesGroup.addLayer(homesClusterGroup);
+	homesGroup.addLayer(homesRectGroup);
+	var maxZoomForCluster = -1;
+
+
+	var sethomes = function(data) {
+		homesClusterGroup.clearLayers();
+		homesRectGroup.clearLayers();
+	
+		var homePower = Math.floor(Math.log(data.homesize) / Math.LN2);
+		var maxClusterZoomUnlimited = mapinfo.maxzoom - (homePower - 3);
+		var maxClusterZoomLimitedMax = Math.min(maxClusterZoomUnlimited, mapinfo.maxzoom+1);
+		maxZoomForCluster = Math.max(maxClusterZoomLimitedMax, 0);
+	
+		checkHomeClustering({target: map});
+
+		var size = data.homesize;
+		
+		$.each( data.homeowners, function( key, val ) {
+			var steamid = val.steamid;
+			
+			var color = val.active ? "#55ff55" : "#ff0000";
+				
+			var pos = L.latLng(val.x, val.z);
+			var bounds = L.latLngBounds(L.latLng(val.x - size, val.z - size), L.latLng(val.x + size, val.z + size));
+			var r = L.rectangle(bounds, {color: color, weight: 1, opacity: 0.8, fillOpacity: 0.15});
+			var m = L.marker(pos, { clickable: false, keyboard: false, zIndexOffset:-1000, iconSize: [0,0], icon: L.divIcon({className: 'invisIcon', iconSize:[0,0]}) });
+			r.bindPopup("Owner: " + steamid + " <br/>Position: " + val.x + " " + val.y + " " + val.z + " <br/>Active: " + val.active);
+			homesRectGroup.addLayer(r);
+			homesClusterGroup.addLayer(m);
+			
+		});
+	}
+
+	var updateHomesEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+		$.getJSON( "http://" + hostname + ":" + port + "/api/getplayerhomes")
+		.done(sethomes)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching player homes");
+		})
+	}
+
+
+	var checkHomeClustering = function(e) {
+		if (e.target._zoom >= maxZoomForCluster) {
+			homesGroup.removeLayer(homesClusterGroup);	
+		} else {
+			homesGroup.addLayer(homesClusterGroup);	
+		}
+	};
+
+	map.on('zoomend', checkHomeClustering);
+	
+	map.on('overlayadd', function(e) {
+		if (e.layer == homesGroup) {
+			updateHomesEvent();
+		}
+	});
+
+	return homesGroup;
 }
 
 // <--CPM Layers
