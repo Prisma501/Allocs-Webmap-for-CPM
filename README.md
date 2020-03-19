@@ -30,5 +30,5 @@ This version contains checkboxes and layers for:
 * All POI's
 * Quest POI's
 * Quest POI's with bed/lcb (shielded behind viewlandclaims permission(allocs))
-* All CPM's advanced claims (11)
-* Player beds
+* All CPM's advanced claims (11) (shielded behind viewallclaims permission(allocs))
+* Player beds (shielded behind viewallclaims permission(allocs))
