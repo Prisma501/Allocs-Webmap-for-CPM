@@ -216,6 +216,9 @@ function InitMap() {
 		
 		layerControl.addOverlay (GetLcbFreeClaimsLayer (map, mapinfo), "Adv. Claims LcbFree");
 		layerCount++;
+
+		layerControl.addOverlay (GetPVPClaimsLayer (map, mapinfo), "Adv. Claims PVP");
+		layerCount++;
 	}
 	
 	// <-- CPM Checkboxes
@@ -1535,6 +1538,67 @@ function GetLcbFreeClaimsLayer (map, mapinfo) {
 	});
 
 	return lcbfreeClaimsGroup;
+}
+
+function GetPVPClaimsLayer (map, mapinfo) {
+	var pvpColor = "#00FF00";
+	var pvpClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setpvp = function(data) {
+		pvpClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: pvpColor,color: pvpColor,fillOpacity:0.15});
+			
+			var pvpTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(playerlevelTooltip);
+			
+			pvpClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(pvpTooltip);
+			pvpClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updatePVPEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=pvp")
+		.done(setpvp)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching pvp claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == pvpClaimsGroup) {
+			updatePVPEvent();
+		}
+	});
+
+	return pvpClaimsGroup;
 }
 
 function GetHomesLayer (map, mapinfo) {
