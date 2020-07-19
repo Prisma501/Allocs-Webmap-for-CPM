@@ -2,7 +2,7 @@
 Patched map.js for using CPM WebApis
 
 Requires permission level 2000 for the specific api's in cpmcc_permissions.xml to be able to let them show in allocs webmap.
-Set permission lower than 2000 and players will not see the layers on allocs webmap.
+Set permission lower than 2000 the layers will not on allocs webmap.
 ```
 <permission module="cpmcc.map" permission_level="0" />
 <permission module="cpmcc.createadvclaims" permission_level="0" />
