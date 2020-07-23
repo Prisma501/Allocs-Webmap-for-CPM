@@ -216,6 +216,9 @@ function InitMap() {
 		
 		layerControl.addOverlay (GetLcbFreeClaimsLayer (map, mapinfo), "Adv. Claims LcbFree");
 		layerCount++;
+
+		layerControl.addOverlay (GetAntiBlockClaimsLayer (map, mapinfo), "Adv. Claims AntiBlock");
+		layerCount++;
 	}
 	
 	// <-- CPM Checkboxes
@@ -1608,6 +1611,67 @@ function GetHomesLayer (map, mapinfo) {
 	});
 
 	return homesGroup;
+}
+
+function GetAntiBlockClaimsLayer (map, mapinfo) {
+	var antiblockColor = "#00FF00";
+	var antiblockClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setAntiBlock = function(data) {
+		antiblockClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: antiblockColor,color: antiblockColor,fillOpacity:0.15});
+			
+			var antiBlockTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(playerlevelTooltip);
+			
+			antiblockClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(antiBlockTooltip);
+			antiblockClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateAntiBlockEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=antiblock")
+		.done(setAntiBlock)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching antiblock claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == antiblockClaimsGroup) {
+			updateAntiBlockEvent();
+		}
+	});
+
+	return antiblockClaimsGroup;
 }
 
 // <--CPM Layers
