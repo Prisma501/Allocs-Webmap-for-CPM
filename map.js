@@ -219,6 +219,9 @@ function InitMap() {
 
 		layerControl.addOverlay (GetAntiBlockClaimsLayer (map, mapinfo), "Adv. Claims AntiBlock");
 		layerCount++;
+
+		layerControl.addOverlay (GetResetClaimsLayer (map, mapinfo), "Adv. Claims Reset");
+		layerCount++;
 	}
 	
 	// <-- CPM Checkboxes
@@ -1672,6 +1675,67 @@ function GetAntiBlockClaimsLayer (map, mapinfo) {
 	});
 
 	return antiblockClaimsGroup;
+}
+
+function GetResetClaimsLayer (map, mapinfo) {
+	var resetColor = "#00FF00";
+	var resetClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setReset = function(data) {
+		resetClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: resetColor,color: resetColor,fillOpacity:0.15});
+			
+			var resetTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(playerlevelTooltip);
+			
+			resetClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(resetTooltip);
+			resetClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateResetEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=reset")
+		.done(setReset)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching reset claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == resetClaimsGroup) {
+			updateResetEvent();
+		}
+	});
+
+	return resetClaimsGroup;
 }
 
 // <--CPM Layers
