@@ -222,6 +222,12 @@ function InitMap() {
 
 		layerControl.addOverlay (GetResetClaimsLayer (map, mapinfo), "Adv. Claims Reset");
 		layerCount++;
+
+		layerControl.addOverlay (GetProBlockClaimsLayer (map, mapinfo), "Adv. Claims ProBlock");
+		layerCount++;
+
+		layerControl.addOverlay (GetLandclaimClaimsLayer (map, mapinfo), "Adv. Claims Landclaim");
+		layerCount++;
 	}
 	
 	// <-- CPM Checkboxes
@@ -1736,6 +1742,128 @@ function GetResetClaimsLayer (map, mapinfo) {
 	});
 
 	return resetClaimsGroup;
+}
+
+function GetProBlockClaimsLayer (map, mapinfo) {
+	var problockColor = "#00FF00";
+	var problockClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setProBlock = function(data) {
+		problockClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: problockColor,color: problockColor,fillOpacity:0.15});
+			
+			var proBlockTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(playerlevelTooltip);
+			
+			problockClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(proBlockTooltip);
+			problockClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateProBlockEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=problock")
+		.done(setProBlock)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching problock claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == problockClaimsGroup) {
+			updateProBlockEvent();
+		}
+	});
+
+	return problockClaimsGroup;
+}
+
+function GetLandclaimClaimsLayer (map, mapinfo) {
+	var landclaimColor = "#00FF00";
+	var landclaimClaimsGroup = L.layerGroup();
+	
+	// adv. Claim icon
+	var advClaimIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10]
+	});
+	
+	var marker;
+	
+	var setLandclaim = function(data) {
+		landclaimClaimsGroup.clearLayers();
+					
+		$.each(data, function (index, value) {	//console.log(value);
+				
+			var polygon = L.polygon([
+			[value.E,value.S],
+			[value.W,value.S],
+			[value.W,value.N],
+			[value.E,value.N]
+			]);
+			polygon.setStyle({weight:1,fillColor: landclaimColor,color: landclaimColor,fillOpacity:0.15});
+			
+			var landclaimTooltip = "Name: " + value.Name + " Type: " + value.Type;
+			//polygon.bindPopup(playerlevelTooltip);
+			
+			landclaimClaimsGroup.addLayer(polygon);
+			
+			marker = L.marker([value.W, value.N], {icon: advClaimIcon});
+			marker.bindPopup(landclaimTooltip);
+			landclaimClaimsGroup.addLayer(marker);
+		});
+		
+	}
+
+	var updateLandclaimEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=landclaim")
+		.done(setLandclaim)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching landclaim claim list");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == landclaimClaimsGroup) {
+			updateLandclaimEvent();
+		}
+	});
+
+	return landclaimClaimsGroup;
 }
 
 // <--CPM Layers
