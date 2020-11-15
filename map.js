@@ -228,6 +228,9 @@ function InitMap() {
 
 		layerControl.addOverlay (GetLandclaimClaimsLayer (map, mapinfo), "Adv. Claims Landclaim");
 		layerCount++;
+
+		layerControl.addOverlay (GetVehicleMarkerLayer (map, mapinfo), "Vehicles");
+		layerCount++;
 	}
 	
 	// <-- CPM Checkboxes
