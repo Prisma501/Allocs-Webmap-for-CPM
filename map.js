@@ -1866,4 +1866,49 @@ function GetLandclaimClaimsLayer (map, mapinfo) {
 	return landclaimClaimsGroup;
 }
 
+function GetVehicleMarkerLayer (map, mapinfo) {
+	var vehicleMarkerGroup = L.layerGroup();
+	
+	var vehicleIcon = L.icon({
+	    iconUrl: '/static/leaflet/images/layers.png',
+	    iconRetinaUrl: '/static/leaflet/images/layers.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10],
+		correction: [20, 18]
+	});
+	
+	var setVehicleMarkers = function(data) {
+		vehicleMarkerGroup.clearLayers();
+		
+		$.each( data.Vehicles, function( key, val ) {
+			var marker;
+			var vehicleTooltip = "Vehicle: " + val.name + " (x:" + val.posX + ", y:" + val.posY + ", z:" + val.posZ + ")"; 
+			marker = L.marker([val.posX, val.posZ], {icon: vehicleIcon});
+			marker.bindPopup(vehicleTooltip);
+			vehicleMarkerGroup.addLayer(marker);
+		});		
+	}
+	
+	var updateVehicleMarkerEvent = function() {
+		var port = location.port;
+		port = +port + 1;
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + port + "/api/getvehicles")
+		.done(setVehicleMarkers)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching vehicles");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == vehicleMarkerGroup) {
+			updateVehicleMarkerEvent();
+		}
+	});
+
+	return vehicleMarkerGroup;
+}
+
 // <--CPM Layers
