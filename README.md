@@ -35,6 +35,7 @@ The actual layer code for CPM layers can be found between:
 This version contains checkboxes and layers for:
 * Reset Regions
 * Traders
+* Vehicles
 * All POI's
 * Quest POI's
 * Quest POI's with bed/lcb (shielded behind viewlandclaims permission(allocs))
