@@ -16,6 +16,7 @@ Set permission lower than 2000 and the layers will not show on allocs webmap.
 <permission module="cpmcc.getquestpois" permission_level="2000" />
 <permission module="cpmcc.getallpois" permission_level="2000" />
 <permission module="cpmcc.gettraders" permission_level="2000" />
+<permission module="cpmcc.getvehicles" permission_level="2000" />
 ```
 
 To disable/enable CPM checkboxes on allocs webmap (comment or uncomment) look for the code between:
