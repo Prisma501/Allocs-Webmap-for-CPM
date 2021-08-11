@@ -39,7 +39,11 @@ function InitMap() {
 		zoomControl: false, // Added by Zoomslider
 		zoomsliderControl: true,
 		attributionControl: false,
-		crs: SDTD_CRS
+		crs: SDTD_CRS,
+		// For the below options read section "Fractional zoom" here: https://leafletjs.com/examples/zoom-levels/
+		zoomSnap: 1, // Defines the zoom levels that can be achieved at all
+		zoomDelta: 1, // Defines how much the zoom is changed with keyboard +/- and the zoom slider control
+		wheelPxPerZoomLevel: 60 // Defines how much mouse scrolling is needed per zoom level. If zoomDelta is e.g. 0.25 and you want the mouse scroll zoom to match that make this 4 times as high, i.e. 240
 	}).setView([0, 0], Math.max(0, mapinfo.maxzoom - 5));
 
 
@@ -160,7 +164,7 @@ function InitMap() {
 		layerControl.addOverlay (GetLandClaimsLayer (map, mapinfo), "Land claims");
 		layerCount++;
 	}
-	
+
 	// CPM Checkboxes -->
 	
 	layerControl.addOverlay (GetResetRegionsLayer (map, mapinfo), "Reset Regions");
@@ -234,7 +238,7 @@ function InitMap() {
 	}
 	
 	// <-- CPM Checkboxes
-
+	
 	if (HasPermission ("webapi.gethostilelocation")) {
 		layerControl.addOverlay (hostilesMarkerGroup, "Hostiles (<span id='mapControlHostileCount'>0</span>)");
 		layerCount++;
