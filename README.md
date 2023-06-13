@@ -3,7 +3,7 @@ Patched map.js for using CPM WebApis.
 
 A20 and lower: Replace map.js in /Mods/Allocs_WebAndMapRendering/webserver/js
 
-A21 and higher: A20 and lower: Replace map.js in /Mods/Allocs_WebAndMapRendering/webserver_legacy/js
+A21 and higher: Replace map.js in /Mods/Allocs_WebAndMapRendering/webserver_legacy/js
 
 Requires permission level 2000 for the specific api's in cpmcc_permissions.xml to be able to let them show in allocs webmap.
 Set permission lower than 2000 and the layers will not show on allocs webmap.
