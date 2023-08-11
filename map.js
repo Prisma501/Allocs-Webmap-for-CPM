@@ -53,8 +53,8 @@ function InitMap() {
 
 	// player icon
 	var playerIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/marker-survivor.png',
-	    iconRetinaUrl: '/static/leaflet/images/marker-survivor-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/marker-survivor.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/marker-survivor-2x.png',
 	    iconSize: [25, 48],
 	    iconAnchor: [12, 24],
 	    popupAnchor: [0, -20]
@@ -62,8 +62,8 @@ function InitMap() {
 	
 	// hostile icon
 	var hostileIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/marker-zombie.png',
-	    iconRetinaUrl: '/static/leaflet/images/marker-zombie-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/marker-zombie.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/marker-zombie-2x.png',
 	    iconSize: [25, 33],
 	    iconAnchor: [12, 16],
 	    popupAnchor: [0, -10]
@@ -71,8 +71,8 @@ function InitMap() {
 	
 	// animal icon
 	var animalIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/marker-animal.png',
-	    iconRetinaUrl: '/static/leaflet/images/marker-animal-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/marker-animal.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/marker-animal-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -690,7 +690,7 @@ function GetResetRegionsLayer (map, mapinfo) {
 	
   	var updateResetRegionsEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getresetregions")
@@ -713,8 +713,8 @@ function GetTraderMarkerLayer (map, mapinfo) {
 	var traderMarkerGroup = L.layerGroup();
 	
 	var traderIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10],
@@ -735,7 +735,7 @@ function GetTraderMarkerLayer (map, mapinfo) {
 	
 	var updateTraderMarkerEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/gettraders")
@@ -776,7 +776,7 @@ function GetAllPOILayer (map, mapinfo) {
 
 	var updateAllPoiEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 		$.getJSON( "http://" + hostname + ":" + port + "/api/getallpois")
 		.done(setallpois)
@@ -816,7 +816,7 @@ function GetQuestPOILayer (map, mapinfo) {
 
 	var updateQuestPoiEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 		$.getJSON( "http://" + hostname + ":" + port + "/api/getquestpois")
 		.done(setquestpois)
@@ -840,8 +840,8 @@ function GetQuestPOIBedLcbLayer (map, mapinfo) {
 	var questPoiGroup = L.layerGroup();
 	
 	var questPoiIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10],
@@ -869,7 +869,7 @@ function GetQuestPOIBedLcbLayer (map, mapinfo) {
 
 	var updateQuestPoiEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 		$.getJSON( "http://" + hostname + ":" + port + "/api/getquestpois?filter=bedlcbonly")
 		.done(setquestpois)
@@ -893,8 +893,8 @@ function GetNormalClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -929,7 +929,7 @@ function GetNormalClaimsLayer (map, mapinfo) {
 
 	var updateNormalEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=normal")
@@ -954,8 +954,8 @@ function GetReversedClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -990,7 +990,7 @@ function GetReversedClaimsLayer (map, mapinfo) {
 
 	var updateReversedEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=reversed")
@@ -1015,8 +1015,8 @@ function GetHostilefreeClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1051,7 +1051,7 @@ function GetHostilefreeClaimsLayer (map, mapinfo) {
 
 	var updateHostilefreeEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=hostilefree")
@@ -1076,8 +1076,8 @@ function GetTimedClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1112,7 +1112,7 @@ function GetTimedClaimsLayer (map, mapinfo) {
 
 	var updateTimedEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=timed")
@@ -1137,8 +1137,8 @@ function GetLeveledClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1173,7 +1173,7 @@ function GetLeveledClaimsLayer (map, mapinfo) {
 
 	var updateLeveledEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=leveled")
@@ -1197,8 +1197,8 @@ function GetPortalClaimsLayer (map, mapinfo) {
 	var portalClaimsGroup = L.layerGroup();
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1233,7 +1233,7 @@ function GetPortalClaimsLayer (map, mapinfo) {
 
 	var updatePortalEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=portal")
@@ -1257,8 +1257,8 @@ function GetOpenhoursClaimsLayer (map, mapinfo) {
 	var openhoursClaimsGroup = L.layerGroup();
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1293,7 +1293,7 @@ function GetOpenhoursClaimsLayer (map, mapinfo) {
 
 	var updateOpenhoursEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=openhours")
@@ -1318,8 +1318,8 @@ function GetNotifyClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1354,7 +1354,7 @@ function GetNotifyClaimsLayer (map, mapinfo) {
 
 	var updateNotifyEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=notify")
@@ -1379,8 +1379,8 @@ function GetCommandClaimsLayer (map, mapinfo) {
 		
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1415,7 +1415,7 @@ function GetCommandClaimsLayer (map, mapinfo) {
 
 	var updateCommandEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=command")
@@ -1440,8 +1440,8 @@ function GetPlayerlevelClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1476,7 +1476,7 @@ function GetPlayerlevelClaimsLayer (map, mapinfo) {
 
 	var updatePlayerlevelEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=playerlevel")
@@ -1501,8 +1501,8 @@ function GetLcbFreeClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1537,7 +1537,7 @@ function GetLcbFreeClaimsLayer (map, mapinfo) {
 
 	var updateLcbFreeEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=lcbfree")
@@ -1600,7 +1600,7 @@ function GetHomesLayer (map, mapinfo) {
 
 	var updateHomesEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 		$.getJSON( "http://" + hostname + ":" + port + "/api/getplayerhomes")
 		.done(sethomes)
@@ -1635,8 +1635,8 @@ function GetAntiBlockClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1671,7 +1671,7 @@ function GetAntiBlockClaimsLayer (map, mapinfo) {
 
 	var updateAntiBlockEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=antiblock")
@@ -1696,8 +1696,8 @@ function GetResetClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1732,7 +1732,7 @@ function GetResetClaimsLayer (map, mapinfo) {
 
 	var updateResetEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=reset")
@@ -1757,8 +1757,8 @@ function GetProBlockClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1793,7 +1793,7 @@ function GetProBlockClaimsLayer (map, mapinfo) {
 
 	var updateProBlockEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=problock")
@@ -1818,8 +1818,8 @@ function GetLandclaimClaimsLayer (map, mapinfo) {
 	
 	// adv. Claim icon
 	var advClaimIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers-2x.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers-2x.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10]
@@ -1854,7 +1854,7 @@ function GetLandclaimClaimsLayer (map, mapinfo) {
 
 	var updateLandclaimEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=landclaim")
@@ -1877,8 +1877,8 @@ function GetVehicleMarkerLayer (map, mapinfo) {
 	var vehicleMarkerGroup = L.layerGroup();
 	
 	var vehicleIcon = L.icon({
-	    iconUrl: '/static/leaflet/images/layers.png',
-	    iconRetinaUrl: '/static/leaflet/images/layers.png',
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers.png',
 	    iconSize: [25, 26],
 	    iconAnchor: [12, 13],
 	    popupAnchor: [0, -10],
@@ -1899,7 +1899,7 @@ function GetVehicleMarkerLayer (map, mapinfo) {
 	
 	var updateVehicleMarkerEvent = function() {
 		var port = location.port;
-		port = +port + 1;
+		port = +port + 3;
 		var hostname = location.hostname;
 				
 		$.getJSON("http://" + hostname + ":" + port + "/api/getvehicles")
