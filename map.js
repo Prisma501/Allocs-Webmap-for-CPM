@@ -1,3 +1,5 @@
+var cpmWebUiPort = 11111;
+
 var mapinfo = {
 	regionsize: 512,
 	chunksize: 16,
@@ -689,11 +691,9 @@ function GetResetRegionsLayer (map, mapinfo) {
 	}
 	
   	var updateResetRegionsEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getresetregions")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getresetregions")
 		.done(setResetRegions)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching reset regions claim list");
@@ -734,11 +734,9 @@ function GetTraderMarkerLayer (map, mapinfo) {
 	}
 	
 	var updateTraderMarkerEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/gettraders")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/gettraders")
 		.done(setTraderMarkers)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching traders");
@@ -775,10 +773,8 @@ function GetAllPOILayer (map, mapinfo) {
 	}
 
 	var updateAllPoiEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
-		$.getJSON( "http://" + hostname + ":" + port + "/api/getallpois")
+		$.getJSON( "http://" + hostname + ":" + cpmWebUiPort + "/api/getallpois")
 		.done(setallpois)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching all pois");
@@ -815,10 +811,8 @@ function GetQuestPOILayer (map, mapinfo) {
 	}
 
 	var updateQuestPoiEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
-		$.getJSON( "http://" + hostname + ":" + port + "/api/getquestpois")
+		$.getJSON( "http://" + hostname + ":" + cpmWebUiPort + "/api/getquestpois")
 		.done(setquestpois)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching quest pois");
@@ -868,10 +862,8 @@ function GetQuestPOIBedLcbLayer (map, mapinfo) {
 	}
 
 	var updateQuestPoiEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
-		$.getJSON( "http://" + hostname + ":" + port + "/api/getquestpois?filter=bedlcbonly")
+		$.getJSON( "http://" + hostname + ":" + cpmWebUiPort + "/api/getquestpois?filter=bedlcbonly")
 		.done(setquestpois)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching quest pois");
@@ -928,11 +920,9 @@ function GetNormalClaimsLayer (map, mapinfo) {
 	}
 
 	var updateNormalEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=normal")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=normal")
 		.done(setNormal)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching normal claim list");
@@ -989,11 +979,9 @@ function GetReversedClaimsLayer (map, mapinfo) {
 	}
 
 	var updateReversedEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=reversed")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=reversed")
 		.done(setReversed)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching reversed claim list");
@@ -1050,11 +1038,9 @@ function GetHostilefreeClaimsLayer (map, mapinfo) {
 	}
 
 	var updateHostilefreeEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=hostilefree")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=hostilefree")
 		.done(setHostilefree)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching hostilefree claim list");
@@ -1111,11 +1097,9 @@ function GetTimedClaimsLayer (map, mapinfo) {
 	}
 
 	var updateTimedEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=timed")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=timed")
 		.done(setTimed)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching timed claim list");
@@ -1172,11 +1156,9 @@ function GetLeveledClaimsLayer (map, mapinfo) {
 	}
 
 	var updateLeveledEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=leveled")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=leveled")
 		.done(setLeveled)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching leveled claim list");
@@ -1232,11 +1214,9 @@ function GetPortalClaimsLayer (map, mapinfo) {
 	}
 
 	var updatePortalEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=portal")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=portal")
 		.done(setPortal)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching portal claim list");
@@ -1292,11 +1272,9 @@ function GetOpenhoursClaimsLayer (map, mapinfo) {
 	}
 
 	var updateOpenhoursEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=openhours")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=openhours")
 		.done(setOpenhours)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching openhours claim list");
@@ -1353,11 +1331,9 @@ function GetNotifyClaimsLayer (map, mapinfo) {
 	}
 
 	var updateNotifyEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=notify")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=notify")
 		.done(setNotify)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching notify claim list");
@@ -1414,11 +1390,9 @@ function GetCommandClaimsLayer (map, mapinfo) {
 	}
 
 	var updateCommandEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=command")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=command")
 		.done(setCommand)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching command claim list");
@@ -1475,11 +1449,9 @@ function GetPlayerlevelClaimsLayer (map, mapinfo) {
 	}
 
 	var updatePlayerlevelEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=playerlevel")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=playerlevel")
 		.done(setPlayerlevel)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching playerlevel claim list");
@@ -1536,11 +1508,9 @@ function GetLcbFreeClaimsLayer (map, mapinfo) {
 	}
 
 	var updateLcbFreeEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=lcbfree")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=lcbfree")
 		.done(setLcbFree)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching lcbfree claim list");
@@ -1599,10 +1569,8 @@ function GetHomesLayer (map, mapinfo) {
 	}
 
 	var updateHomesEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
-		$.getJSON( "http://" + hostname + ":" + port + "/api/getplayerhomes")
+		$.getJSON( "http://" + hostname + ":" + cpmWebUiPort + "/api/getplayerhomes")
 		.done(sethomes)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching player homes");
@@ -1670,11 +1638,9 @@ function GetAntiBlockClaimsLayer (map, mapinfo) {
 	}
 
 	var updateAntiBlockEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=antiblock")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=antiblock")
 		.done(setAntiBlock)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching antiblock claim list");
@@ -1731,11 +1697,9 @@ function GetResetClaimsLayer (map, mapinfo) {
 	}
 
 	var updateResetEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=reset")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=reset")
 		.done(setReset)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching reset claim list");
@@ -1792,11 +1756,9 @@ function GetProBlockClaimsLayer (map, mapinfo) {
 	}
 
 	var updateProBlockEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=problock")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=problock")
 		.done(setProBlock)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching problock claim list");
@@ -1853,11 +1815,9 @@ function GetLandclaimClaimsLayer (map, mapinfo) {
 	}
 
 	var updateLandclaimEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getadvclaims?type=landclaim")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getadvclaims?type=landclaim")
 		.done(setLandclaim)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching landclaim claim list");
@@ -1898,11 +1858,9 @@ function GetVehicleMarkerLayer (map, mapinfo) {
 	}
 	
 	var updateVehicleMarkerEvent = function() {
-		var port = location.port;
-		port = +port + 3;
 		var hostname = location.hostname;
 				
-		$.getJSON("http://" + hostname + ":" + port + "/api/getvehicles")
+		$.getJSON("http://" + hostname + ":" + cpmWebUiPort + "/api/getvehicles")
 		.done(setVehicleMarkers)
 		.fail(function(jqxhr, textStatus, error) {
 			console.log("Error fetching vehicles");
