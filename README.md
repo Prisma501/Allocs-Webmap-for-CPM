@@ -1,11 +1,11 @@
-# Allocs Webmap for CPM
-Patched map.js for using CPM WebApis.
+# Allocs Webmap for PrismaCore
+Patched map.js for using PrismaCore WebApis.
 
 A20 and lower: Replace map.js in /Mods/Allocs_WebAndMapRendering/webserver/js
 
 A21 and higher: Replace map.js in /Mods/Allocs_WebAndMapRendering/webserver_legacy/js
 
-To configure connection to CPM's WebAPI, make sure the port CPM's WebUI is running on, is filled in map.js (first line) with 'var cpmWebUiPort = 11111;'
+To configure connection to CPM's WebAPI, make sure the port CPM's WebUI is running on, is filled in map.js (first line) with 'var ClaimCreatorWebUiPort = 11111;'
 
 Requires permission level 2000 for the specific api's in cpmcc_permissions.xml or you can create apiuser(s) for validated access to any of the apis, to be able to let them show in allocs webmap.
 Set permission lower than 2000 or dont have apiuser access and the layers will not show on allocs webmap.
@@ -16,38 +16,38 @@ Set permission lower than 2000 or dont have apiuser access and the layers will n
 		 <!-- <apiuser username="apiuser1" password="password1" permission_level="0" /> -->
 	</apiusers>
 	<permissions>
-		<permission module="cpmcc.map" permission_level="0" />
-		<permission module="cpmcc.createadvclaims" permission_level="0" />
-		<permission module="cpmcc.getlandclaims" permission_level="0" />
-		<permission module="cpmcc.getadvclaims" permission_level="0" />
-		<permission module="cpmcc.getresetregions" permission_level="0" />
-		<permission module="cpmcc.getplayerhomes" permission_level="0" />
-		<permission module="cpmcc.getplayersonline" permission_level="0" />
-		<permission module="cpmcc.getquestpois" permission_level="2000" />
-		<permission module="cpmcc.getallpois" permission_level="2000" />
-		<permission module="cpmcc.gettraders" permission_level="2000" />
-		<permission module="cpmcc.getvehicles" permission_level="2000" />
+		<permission module="ClaimCreator.map" permission_level="0" />
+		<permission module="ClaimCreator.createadvclaims" permission_level="0" />
+		<permission module="ClaimCreator.getlandclaims" permission_level="0" />
+		<permission module="ClaimCreator.getadvclaims" permission_level="0" />
+		<permission module="ClaimCreator.getresetregions" permission_level="0" />
+		<permission module="ClaimCreator.getplayerhomes" permission_level="0" />
+		<permission module="ClaimCreator.getplayersonline" permission_level="0" />
+		<permission module="ClaimCreator.getquestpois" permission_level="2000" />
+		<permission module="ClaimCreator.getallpois" permission_level="2000" />
+		<permission module="ClaimCreator.gettraders" permission_level="2000" />
+		<permission module="ClaimCreator.getvehicles" permission_level="2000" />
 	</permissions>
 </cpmcc_permissions>
 ```
-For accessing the apis via api user, configure one or multiple apiusers in cpmcc_permissions.xml and add:
+For accessing the apis via api user, configure one or multiple apiusers in ClaimCreator_permissions.xml and add:
 ```
 ?apiuser=apiuser1&password=password1
 ```
 after the api call of your choice in map.js.
 
-To disable/enable CPM checkboxes on allocs webmap (comment or uncomment) look for the code between:
+To disable/enable PrismaCore checkboxes on allocs webmap (comment or uncomment) look for the code between:
 ```
-// CPM Checkboxes -->
+// PrismaCore Checkboxes -->
 .......
-// <-- CPM Checkboxes
+// <-- PrismaCore Checkboxes
 ```
 
-The actual layer code for CPM layers can be found between:
+The actual layer code for PrismaCore layers can be found between:
 ```
-//CPM Layers -->
+//PrismaCore Layers -->
 .......
-// <-- CPM Layers
+// <-- PrismaCore Layers
 ```
 
 This version contains checkboxes and layers for:
