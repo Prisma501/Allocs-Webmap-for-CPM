@@ -167,7 +167,7 @@ function InitMap() {
 		layerCount++;
 	}
 
-	// CPM Checkboxes -->
+	// PrismaCore Checkboxes -->
 	
 	layerControl.addOverlay (GetResetRegionsLayer (map, mapinfo), "Reset Regions");
 	layerCount++;
@@ -239,7 +239,7 @@ function InitMap() {
 		layerCount++;
 	}
 	
-	// <-- CPM Checkboxes
+	// <-- PrismaCore Checkboxes
 	
 	if (HasPermission ("webapi.gethostilelocation")) {
 		layerControl.addOverlay (hostilesMarkerGroup, "Hostiles (<span id='mapControlHostileCount'>0</span>)");
@@ -666,7 +666,7 @@ function StartMapModule () {
 	});
 }
 
-//CPM Layers -->
+//PrismaCore Layers -->
 
 function GetResetRegionsLayer (map, mapinfo) {
 	var resetRegionColor = "#FF0000" //put any html color code in here to make the polygon suit your color needs
@@ -1876,4 +1876,4 @@ function GetVehicleMarkerLayer (map, mapinfo) {
 	return vehicleMarkerGroup;
 }
 
-// <--CPM Layers
+// <--PrismaCore Layers
