@@ -7,7 +7,7 @@ A21 and higher: Replace map.js in /Mods/Allocs_WebAndMapRendering/webserver_lega
 
 To configure connection to CPM's WebAPI, make sure the port CPM's WebUI is running on, is filled in map.js (first line) with 'var ClaimCreatorWebUiPort = 11111;'
 
-Requires permission level 2000 for the specific api's in cpmcc_permissions.xml or you can create apiuser(s) for validated access to any of the apis, to be able to let them show in allocs webmap.
+Requires permission level 2000 for the specific api's in ClaimCreator_permissions.xml or you can create apiuser(s) for validated access to any of the apis, to be able to let them show in allocs webmap.
 Set permission lower than 2000 or dont have apiuser access and the layers will not show on allocs webmap.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
