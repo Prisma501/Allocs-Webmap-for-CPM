@@ -27,6 +27,7 @@ Set permission lower than 2000 or dont have apiuser access and the layers will n
 		<permission module="ClaimCreator.getallpois" permission_level="2000" />
 		<permission module="ClaimCreator.gettraders" permission_level="2000" />
 		<permission module="ClaimCreator.getvehicles" permission_level="2000" />
+		<permission module="ClaimCreator.getdrones" permission_level="2000" />
 	</permissions>
 </cpmcc_permissions>
 ```
@@ -53,7 +54,8 @@ The actual layer code for PrismaCore layers can be found between:
 This version contains checkboxes and layers for:
 * Reset Regions
 * Traders
-* Vehicles
+* Vehicles (shielded behind viewallclaims permission(allocs))
+* Drones (shielded behind viewallclaims permission(allocs))
 * All POI's
 * Quest POI's
 * Quest POI's with bed/lcb (shielded behind viewlandclaims permission(allocs))
