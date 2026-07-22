@@ -237,6 +237,9 @@ function InitMap() {
 
 		layerControl.addOverlay (GetVehicleMarkerLayer (map, mapinfo), "Vehicles");
 		layerCount++;
+
+		layerControl.addOverlay (GetDroneMarkerLayer (map, mapinfo), "Drones");
+		layerCount++;
 	}
 	
 	// <-- PrismaCore Checkboxes
@@ -1874,6 +1877,49 @@ function GetVehicleMarkerLayer (map, mapinfo) {
 	});
 
 	return vehicleMarkerGroup;
+}
+
+function GetDroneMarkerLayer (map, mapinfo) {
+	var droneMarkerGroup = L.layerGroup();
+	
+	var droneIcon = L.icon({
+	    iconUrl: '/legacymap/leaflet/images/layers.png',
+	    iconRetinaUrl: '/legacymap/leaflet/images/layers.png',
+	    iconSize: [25, 26],
+	    iconAnchor: [12, 13],
+	    popupAnchor: [0, -10],
+		correction: [20, 18]
+	});
+	
+	var setDroneMarkers = function(data) {
+		droneMarkerGroup.clearLayers();
+		
+		$.each( data.Drones, function( key, val ) {
+			var marker;
+			var droneTooltip = "Drone: " + val.name + " (x:" + val.posX + ", y:" + val.posY + ", z:" + val.posZ + ")"; 
+			marker = L.marker([val.posX, val.posZ], {icon: droneIcon});
+			marker.bindPopup(droneTooltip);
+			droneMarkerGroup.addLayer(marker);
+		});		
+	}
+	
+	var updateDroneMarkerEvent = function() {
+		var hostname = location.hostname;
+				
+		$.getJSON("http://" + hostname + ":" + ClaimCreatorWebUiPort + "/api/getdrones")
+		.done(setDroneMarkers)
+		.fail(function(jqxhr, textStatus, error) {
+			console.log("Error fetching drones");
+		})
+	}
+		
+	map.on('overlayadd', function(e) {
+		if (e.layer == droneMarkerGroup) {
+			updateDroneMarkerEvent();
+		}
+	});
+
+	return droneMarkerGroup;
 }
 
 // <--PrismaCore Layers
